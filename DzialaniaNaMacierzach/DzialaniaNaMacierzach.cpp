@@ -1,12 +1,53 @@
-﻿// DzialaniaNaMacierzach.cpp : Ten plik zawiera funkcję „main”. W nim rozpoczyna się i kończy wykonywanie programu.
-//
-#include <Windows.h>
-#include <iostream>
+﻿#include <iostream>
+#include <locale.h>
+#include "funkcje.h"
+
 using namespace std;
 int main()
 {
-    cout << "Hello World!\n";
+    setlocale(LC_CTYPE, "Polish");
+    /*
+    cout << endl << "Działania na macierzach" << endl << endl;
+    cout << "Podaj sposób wprowadzania danych: " << endl;
+    cout << "1. Dane z pliku " << endl;
+    cout << "2. Dane wprowadzone z klawiatury " << endl;
+    cout << "3. Dane pseudolosowe " << endl;
+    bool validation = false;
+    int option = 0;
+    do{
+        cin >> option;
+        if (option == 1 || option == 2 || option == 3) {
+            validation = true;
+        }
+    } while (!validation);
+    system("cls");//Czyszczenie konsoli*/
+    int option = startMenu();
+    switch (option)
+    {
+    case 1: {
+        string plik;
+        cout << "Podaj nazwe pliku: ";
+        cin >> plik;
+        break;
+    }
+    case 2: {
+        int ilosc = enterMartixNumber();
+
+        break;
+    }
+    case 3: {
+        int ilosc = enterMartixNumber();
+        cout << "Udało się";
+        break;
+    }
+    default:
+        break;
+    }
+    return 1;
 }
+
+
+
 
 // Uruchomienie programu: Ctrl + F5 lub menu Debugowanie > Uruchom bez debugowania
 // Debugowanie programu: F5 lub menu Debugowanie > Rozpocznij debugowanie
