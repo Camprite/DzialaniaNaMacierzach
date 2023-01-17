@@ -1,11 +1,27 @@
 ﻿#include <iostream>
 #include <locale.h>
+#include <fstream>
 #include "funkcje.h"
 
 using namespace std;
+
+/*struct matrix {
+    int xsize;
+    int ysize;
+    int** matrix;
+    matrix = new int* [xsize];
+    for (int i = 0;i < xsize;i++) {
+        matrix[i] = new int[ysize];
+};*/
+int*** matrixarray;//tablica dynamiczna z macierzami
+int** matrixspec ;//tablica przechowująca dane poszczególnej macierzy
+int* matrixnumber = new int;//ilosć macierzy
 int main()
 {
-    setlocale(LC_CTYPE, "Polish");
+    //system("color 0a"); // alternatywna wersja kolorków
+    system("color f0"); //zmiana koloru konsoli :)
+    setlocale(LC_CTYPE, "Polish"); //polskie znaczki 
+
     /*
     cout << endl << "Działania na macierzach" << endl << endl;
     cout << "Podaj sposób wprowadzania danych: " << endl;
@@ -26,8 +42,15 @@ int main()
     {
     case 1: {
         string plik;
-        cout << "Podaj nazwe pliku: ";
-        cin >> plik;
+        //cin >> plik;
+        //wczytajPlik(plik);
+          do {
+            cout << "Podaj nazwe pliku: ";
+            cin >> plik;
+        }while (!walidacjaPliku(plik));
+        if (walidacjaPliku(plik)) {
+            wczytajPlik(plik,matrixarray,matrixspec,matrixnumber);
+        }
         break;
     }
     case 2: {
