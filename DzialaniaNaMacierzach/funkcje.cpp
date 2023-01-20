@@ -1,7 +1,104 @@
 #include "funkcje.h"
 #include <iostream>
 #include <fstream>
+#include <cstdlib>
+#include <time.h>
 using namespace std;
+//----------------FUNKCJE OGÓLENGO PRZEZNACZENIA--------------
+int randomValue(int upRange, int downRange) {
+    int zakres = upRange - downRange;
+    int value = (rand()%zakres)+downRange;
+
+    return value;
+}
+bool isNumber(string var, bool czyDodatnie) {
+    int wartosc;
+    try { wartosc = stoi(var); }
+    catch (...) {
+        return false;
+    }
+    if (czyDodatnie && wartosc >= 0) {
+        return true;
+    }
+    if (!czyDodatnie && wartosc <= 0) {
+        return false;
+    }
+
+}
+bool isNumber(string var) {
+    int wartosc;
+    try { wartosc = stoi(var); }
+    catch (...) {
+        return false;
+    }
+
+}
+int positiveValue(string message) {
+    string temp;
+    bool walidacja = false;
+    bool czyDodatanie = true;
+    bool tekst = false;
+    do {
+        system("cls");
+        if (tekst == true) {
+            cout << "Coœ posz³o nie tak, spróbuj jeszcze raz" << endl;
+        }
+        cout << message << endl;
+        cin >> temp;
+        if (isNumber(temp, true)) {
+            return  stoi(temp); //ZMIENNA PRZECHOWUJ¥CA ILOSC MACIERZY
+            walidacja = true;
+
+        }
+        else {
+            tekst = true;
+        }
+
+    } while (!walidacja);
+}
+int intValue(string message) {
+    string temp;
+    bool walidacja = false;
+    bool tekst = false;
+    do {
+        system("cls");
+        if (tekst == true) {
+            cout << "Coœ posz³o nie tak, spróbuj jeszcze raz" << endl;
+        }
+        cout << message << endl;
+        cin >> temp;
+        if (isNumber(temp)) {
+            return  stoi(temp); //ZMIENNA PRZECHOWUJ¥CA ILOSC MACIERZY
+            walidacja = true;
+
+        }
+        else {
+            tekst = true;
+        }
+
+    } while (!walidacja);
+}int intValue() {
+    string temp;
+    bool walidacja = false;
+    bool tekst = false;
+    do {
+        system("cls");
+        if (tekst == true) {
+            cout << "Coœ posz³o nie tak, spróbuj jeszcze raz";
+        }
+        cin >> temp;
+        if (isNumber(temp)) {
+            return  stoi(temp); //ZMIENNA PRZECHOWUJ¥CA ILOSC MACIERZY
+            walidacja = true;
+
+        }
+        else {
+            tekst = true;
+        }
+
+    } while (!walidacja);
+}
+
 
 //-----------------------WCZYTYWANIE DANYCH Z PLIKU-----------------------
 bool walidacjaPliku(string plik) {
@@ -9,11 +106,16 @@ bool walidacjaPliku(string plik) {
 
     return true; // TESTOWO
 }
-void wczytajPlik(string plik,int*** matrixarray,int** matrixspec,int* matrixnumber) {
+void enterMartixNumberFromFile(string plik,int*** matrixarray,int** matrixspec,int* matrixnumber) {
     bool walidacja = false;
+    bool tekst = false;
     ifstream file;
     do {
         try {
+            system("cls");
+            if (tekst == true) {
+                cout << "Coœ posz³o nie tak, spróbuj jeszcze raz" << endl;
+            }
             cout << "Podaj nazwe pliku: ";
             cin >> plik;
             file.open(plik, ios::in);
@@ -21,12 +123,12 @@ void wczytajPlik(string plik,int*** matrixarray,int** matrixspec,int* matrixnumb
                 walidacja = true;
             }
             if (!file.good()) {
+                tekst = true;
                 throw 'e';
+                
             }
         }
         catch (...) {
-            cout << "Coœ posz³o nie tak, Kliknij dowolny klawisz by spróbowaæ jeszcze raz" << endl;
-            system("PAUSE");
         }
     } while (!walidacja);
 
@@ -86,6 +188,107 @@ void wczytajPlik(string plik,int*** matrixarray,int** matrixspec,int* matrixnumb
     }
 }
 //-----------------------KONIEC WCZYTYWANIA DANYCH Z PLIKU----------------
+
+
+//----------------------WCZYTYWANIE DANYCH Z KLAWIATURY-------------------
+
+void enterMartixNumberFromKeyboard(int*** matrixarray, int** matrixspec, int* matrixnumber) {
+    * matrixnumber = positiveValue("Podaj ilosæ macierzy któr¹ chcesz wpisaæ");
+    cout << *matrixnumber;
+    matrixarray = new int** [*matrixnumber];
+    matrixspec = new int* [*matrixnumber];
+    // ---------------ZADEKLAROWANIE PAMIÊCI DLA SPECYFIKACJI DANEJ MACIERZY
+    
+    for (int i = 0;i < (*matrixnumber);i++) {
+        matrixspec[i] = new int[3];
+    }
+    
+
+    for (int i = 0;i < *matrixnumber;i++) {
+        int lkolumn = intValue("Podaj liczbe kolumn: ");
+        int lwierszy = intValue("Podaj liczbe wierszy: ");
+        matrixspec[i][0]=lkolumn; //pobranie xsize
+        matrixspec[i][1]=lwierszy; //pobranie ysize
+        matrixspec[i][2] = 0; //pobranie wyznacznika macierzy domyœlnie 0
+        matrixarray[i] = new int* [matrixspec[i][0]];
+        for (int j = 0;j < matrixspec[i][0];j++) {
+            matrixarray[i][j] = new int[matrixspec[i][1]];
+
+        }
+        for (int j = 0;j < matrixspec[i][0];j++) {
+            for (int k = 0;k < matrixspec[i][1];k++) {
+                string tekst ="x: "+to_string(j+1)+" y: "+to_string(k+1);
+          
+                matrixarray[i][j][k] = intValue(tekst);
+
+         
+            }
+            cout << endl;
+        }
+    }
+
+    }
+
+
+//----------------------KONIEC WCZYTYWANIE DANYCH Z KLAWIATURY-------------------
+
+
+
+//----------------------WCZYTYWANIE DANYCH Z JAKO WARTOSCI LOSOWE-------------------
+
+void enterMartixNumberFromRandom(int*** matrixarray, int** matrixspec, int* matrixnumber) {
+    srand(time(NULL));
+    *matrixnumber = positiveValue("Podaj ilosæ macierzy któr¹ chcesz wype³niæ: ");
+    cout << *matrixnumber;
+    matrixarray = new int** [*matrixnumber];
+    matrixspec = new int* [*matrixnumber];
+    // ---------------ZADEKLAROWANIE PAMIÊCI DLA SPECYFIKACJI DANEJ MACIERZY
+
+    for (int i = 0;i < (*matrixnumber);i++) {
+        matrixspec[i] = new int[3];
+    }
+
+
+    for (int i = 0;i < *matrixnumber;i++) {
+        int lkolumn = intValue("Podaj liczbe kolumn: ");
+        int lwierszy = intValue("Podaj liczbe wierszy: ");
+        
+        int downRange = intValue("Podaj zakres OD: ");
+        int upRange = intValue("Podaj zakres DO: ");
+        matrixspec[i][0] = lkolumn; //pobranie xsize
+        matrixspec[i][1] = lwierszy; //pobranie ysize
+        matrixspec[i][2] = 0; //pobranie wyznacznika macierzy domyœlnie 0
+        matrixarray[i] = new int* [matrixspec[i][0]];
+        for (int j = 0;j < matrixspec[i][0];j++) {
+            matrixarray[i][j] = new int[matrixspec[i][1]];
+
+        }
+        for (int j = 0;j < matrixspec[i][0];j++) {
+            for (int k = 0;k < matrixspec[i][1];k++) {
+                string tekst = "x: " + to_string(j + 1) + " y: " + to_string(k + 1);
+
+                matrixarray[i][j][k] = randomValue(upRange, downRange);
+
+
+            }
+            
+        }
+    }
+    for (int i = 0;i < *matrixnumber;i++) {
+        cout << endl;
+        cout << endl;
+        cout << "Macierz nr: " << i << " " << endl;
+        for (int j = 0;j < matrixspec[i][0];j++) {
+            for (int k = 0;k < matrixspec[i][1];k++) {
+                cout << matrixarray[i][j][k] << " ";
+
+            }
+            cout << endl;
+        }
+    }
+
+}
+//----------------------KONIEC WCZYTYWANIE DANYCH JAKO WARTOSCI LOSOWE-------------------
 
 void wypiszWynik(int** matrix, int xsize, int ysize) {
     for (int i = 0;i < xsize;i++) {

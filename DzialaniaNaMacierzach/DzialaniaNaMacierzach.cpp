@@ -19,23 +19,16 @@ int main()
     {
     case 1: { //---------DANE-------Z--------PLIKU-----------
         string plik;
-       wczytajPlik(plik, matrixarray, matrixspec, matrixnumber);
-          /* do {
-            cout << "Podaj nazwe pliku: ";
-            cin >> plik;
-        }while (!walidacjaPliku(plik));
-        if (walidacjaPliku(plik)) {
-            wczytajPlik(plik,matrixarray,matrixspec,matrixnumber);
-        }*/
+       enterMartixNumberFromFile(plik, matrixarray, matrixspec, matrixnumber);
         break;
     }
     case 2: {//---------DANE--------Z--------KLAIWATURY-----------
-        int ilosc = enterMartixNumber();
+        enterMartixNumberFromKeyboard(matrixarray, matrixspec, matrixnumber);
 
         break;
     }
     case 3: {//---------DANE--------PSEUDOLOSOWE------------
-        int ilosc = enterMartixNumber();
+       enterMartixNumberFromRandom(matrixarray, matrixspec, matrixnumber);
         cout << "Udało się";
         break;
     }
