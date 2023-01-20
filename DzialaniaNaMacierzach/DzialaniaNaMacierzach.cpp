@@ -2,24 +2,28 @@
 #include <locale.h>
 #include <fstream>
 #include "funkcje.h"
+#include <time.h>
+#include <cstdlib>
 
 using namespace std;
 
-int*** matrixarray;//tablica dynamiczna z macierzami
-int** matrixspec ;//tablica przechowująca dane poszczególnej macierzy
-int* matrixnumber = new int;//ilosć macierzy
+int*** matrixarray = new int**;//tablica dynamiczna z macierzami
+int** matrixspec = new int*;//tablica przechowująca dane poszczególnej macierzy
+int* matrixnumber=new int;//ilosć macierzy
+
 int main()
 {
+    srand(time(NULL));
     //system("color 0a"); // alternatywna wersja kolorków
     system("color f0"); //zmiana koloru konsoli :)
     setlocale(LC_CTYPE, "Polish"); //polskie znaczki 
 
-  
         switch (startMenu())
     {
     case 1: { //---------DANE-------Z--------PLIKU-----------
         string plik;
        enterMartixNumberFromFile(plik, matrixarray, matrixspec, matrixnumber);
+       system("pause");
         break;
     }
     case 2: {//---------DANE--------Z--------KLAIWATURY-----------
@@ -32,10 +36,16 @@ int main()
         cout << "Udało się";
         break;
     }
+    case 0: {
+        return 0;
+
+    }
     default:
         return 0;
     }
-        cout << "Podaj dalsze działanie" << endl;
+        operationMenu(matrixarray,matrixspec,matrixnumber);
+
+        
 
 
 

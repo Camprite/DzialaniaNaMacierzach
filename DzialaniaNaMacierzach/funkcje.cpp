@@ -5,34 +5,63 @@
 #include <time.h>
 using namespace std;
 //----------------FUNKCJE OGÓLENGO PRZEZNACZENIA--------------
+//------------WYPISYWANIE DANYCH ---------------
+void coutAllMatrixs(int*** matrixarray, int** matrixspec, int* matrixnumber) {
+    for (int i = 0;i < *matrixnumber;i++) {
+        cout << endl;
+        cout << endl;
+        cout << "Macierz nr: " << i << " " << endl;
+        for (int j = 0;j < matrixspec[i][0];j++) {
+            for (int k = 0;k < matrixspec[i][1];k++) {
+                cout << matrixarray[i][j][k] << " ";
+
+            }
+            cout << endl;
+        }
+    }
+   
+}
+
+void coutMatrix(int*** matrixarray, int** matrixspec, int* matrixnumber) {
+    int val = *matrixnumber;
+        for (int j = 0;j < matrixspec[val][0];j++) {
+            for (int k = 0;k < matrixspec[val][1];k++) {
+                cout << matrixarray[val][j][k] << " ";
+
+            }
+            cout << endl;
+        }
+    
+
+}
 int randomValue(int upRange, int downRange) {
     int zakres = upRange - downRange;
-    int value = (rand()%zakres)+downRange;
-
+    int value = (rand() % zakres) + downRange;
     return value;
 }
 bool isNumber(string var, bool czyDodatnie) {
     int wartosc;
     try { wartosc = stoi(var); }
     catch (...) {
-        return false;
-    }
+        return false;}
     if (czyDodatnie && wartosc >= 0) {
-        return true;
-    }
+        return true; }
     if (!czyDodatnie && wartosc <= 0) {
-        return false;
-    }
-
+        return false;}
+    return true;
 }
+
+
 bool isNumber(string var) {
     int wartosc;
     try { wartosc = stoi(var); }
     catch (...) {
         return false;
     }
-
+    return true;
 }
+
+
 int positiveValue(string message) {
     string temp;
     bool walidacja = false;
@@ -48,14 +77,59 @@ int positiveValue(string message) {
         if (isNumber(temp, true)) {
             return  stoi(temp); //ZMIENNA PRZECHOWUJ¥CA ILOSC MACIERZY
             walidacja = true;
-
         }
         else {
             tekst = true;
         }
-
     } while (!walidacja);
+    return 0;
 }
+int positiveValueNonCLS(string message) {
+    string temp;
+    bool walidacja = false;
+    bool czyDodatanie = true;
+    bool tekst = false;
+    do {
+        if (tekst == true) {
+            cout << "Coœ posz³o nie tak, spróbuj jeszcze raz" << endl;
+        }
+        cout << message << endl;
+        cin >> temp;
+        if (isNumber(temp, true)) {
+            return  stoi(temp); //ZMIENNA PRZECHOWUJ¥CA ILOSC MACIERZY
+            walidacja = true;
+        }
+        else {
+            tekst = true;
+        }
+    } while (!walidacja);
+    return 0;
+}
+int positiveValueNonCLS(string message,int range) {
+    string temp;
+    bool walidacja = false;
+    bool czyDodatanie = true;
+    bool tekst = false;
+    do {
+        if (tekst == true) {
+            cout << "Coœ posz³o nie tak, spróbuj jeszcze raz" << endl;
+        }
+        cout << message << endl;
+        cin >> temp;
+        if (isNumber(temp, true)) {
+            int value = stoi(temp);
+            if (value < range) {
+                return value;  //ZMIENNA PRZECHOWUJ¥CA ILOSC MACIERZY
+            }
+        }
+        else {
+            tekst = true;
+        }
+    } while (!walidacja);
+    return 0;
+}
+
+
 int intValue(string message) {
     string temp;
     bool walidacja = false;
@@ -70,14 +144,16 @@ int intValue(string message) {
         if (isNumber(temp)) {
             return  stoi(temp); //ZMIENNA PRZECHOWUJ¥CA ILOSC MACIERZY
             walidacja = true;
-
         }
         else {
             tekst = true;
         }
-
     } while (!walidacja);
-}int intValue() {
+    return 0;
+}
+
+
+int intValue() {
     string temp;
     bool walidacja = false;
     bool tekst = false;
@@ -90,23 +166,17 @@ int intValue(string message) {
         if (isNumber(temp)) {
             return  stoi(temp); //ZMIENNA PRZECHOWUJ¥CA ILOSC MACIERZY
             walidacja = true;
-
         }
         else {
             tekst = true;
         }
-
     } while (!walidacja);
+    return 0;
 }
 
 
 //-----------------------WCZYTYWANIE DANYCH Z PLIKU-----------------------
-bool walidacjaPliku(string plik) {
-
-
-    return true; // TESTOWO
-}
-void enterMartixNumberFromFile(string plik,int*** matrixarray,int** matrixspec,int* matrixnumber) {
+void enterMartixNumberFromFile(string plik, int*** matrixarray, int** matrixspec, int* matrixnumber) {
     bool walidacja = false;
     bool tekst = false;
     ifstream file;
@@ -125,74 +195,57 @@ void enterMartixNumberFromFile(string plik,int*** matrixarray,int** matrixspec,i
             if (!file.good()) {
                 tekst = true;
                 throw 'e';
-                
             }
         }
         catch (...) {
         }
     } while (!walidacja);
-
-    
-    
+    // ---------------ZADEKLAROWANIE PAMIÊCI DLA ILOSCI MACIERZY
     file >> *matrixnumber;
-    cout << *matrixnumber;
+    cout << "Matrix number:  " << *matrixnumber << "  ";
+
     matrixarray = new int** [*matrixnumber];
     matrixspec = new int* [*matrixnumber];
     // ---------------ZADEKLAROWANIE PAMIÊCI DLA SPECYFIKACJI DANEJ MACIERZY
-    for (int i = 0;i < *matrixnumber;i++) { 
+    for (int i = 0;i < *matrixnumber;i++) {
         matrixspec[i] = new int[3];
     }
-
     // ----------------WCZYTYWANIE DANYCH -----------------------
-    for(int i=0;i< *matrixnumber;i++){
+    for (int i = 0;i < *matrixnumber;i++) {
         file >> matrixspec[i][0]; //pobranie xsize
         file >> matrixspec[i][1]; //pobranie ysize
         file >> matrixspec[i][2]; //pobranie wyznacznika macierzy domyœlnie 0
         cout << "Matrixspecx: " << matrixspec[i][0] << endl;
         cout << "Matrixspecy: " << matrixspec[i][1] << endl;
         cout << "Matrixspect: " << matrixspec[i][2] << endl;
-        matrixarray[i] = new int* [matrixspec[i][0]];
+        matrixarray[i] = new int* [matrixspec[i][1]];
         for (int j = 0;j < matrixspec[i][0];j++) {
-            //matrixarray[i] = new int* [matrixspec[i][0]];
-            matrixarray[i][j] = new int[matrixspec[i][1]];
-           // for (int k = 0;k < matrixspec[i][1];k++) {
-              //  matrixarray[i][j] = new int [matrixspec[i][1]];
-          //  }
-        } 
-        for (int j = 0;j < matrixspec[i][0];j++) {
-            for (int k = 0;k < matrixspec[i][1];k++) {
-                
-                int test;
-                file >> test;
-                cout << test << " - ";
-                matrixarray[i][j][k] = test;
-                
-                // cout << "i: " << i << "j: " << j << "k: " << k << endl;
-            }
-            cout << endl;
+            matrixarray[i][j] = new int[matrixspec[i][1]]; // change 1 to 0
         }
-    }    
-
-    //------------WYPISYWANIE DANYCH CHWILOWE ---------------
-    for (int i = 0;i < *matrixnumber;i++) {
-        cout << endl;
-        cout << endl;
-        cout << "Macierz nr: " << i << " " << endl;
         for (int j = 0;j < matrixspec[i][0];j++) {
-            for (int k = 0;k < matrixspec[i][1];k++) {
-                cout << matrixarray[i][j][k] << " ";
-        
+            for (int k = 0;k < matrixspec[i][1];k++) {// change 1 to 0
+                int value;
+                file >> value;
+                cout << value << " - ";
+                cout << endl;
+                cout << "matrixspec0: " << matrixspec[i][0] << endl;
+                cout << "matrixspec1: " << matrixspec[i][1] << endl;
+                cout << "matrixspec2: " << matrixspec[i][2] << endl;
+                matrixarray[i][j][k] = value;
             }
             cout << endl;
         }
     }
 }
+
+    
+
 //-----------------------KONIEC WCZYTYWANIA DANYCH Z PLIKU----------------
 
 
 //----------------------WCZYTYWANIE DANYCH Z KLAWIATURY-------------------
 
-void enterMartixNumberFromKeyboard(int*** matrixarray, int** matrixspec, int* matrixnumber) {
+void enterMartixNumberFromKeyboard(int*** matrixarray, int** matrixspec, int* matrixnumber){
     * matrixnumber = positiveValue("Podaj ilosæ macierzy któr¹ chcesz wpisaæ");
     cout << *matrixnumber;
     matrixarray = new int** [*matrixnumber];
@@ -228,8 +281,6 @@ void enterMartixNumberFromKeyboard(int*** matrixarray, int** matrixspec, int* ma
     }
 
     }
-
-
 //----------------------KONIEC WCZYTYWANIE DANYCH Z KLAWIATURY-------------------
 
 
@@ -237,7 +288,6 @@ void enterMartixNumberFromKeyboard(int*** matrixarray, int** matrixspec, int* ma
 //----------------------WCZYTYWANIE DANYCH Z JAKO WARTOSCI LOSOWE-------------------
 
 void enterMartixNumberFromRandom(int*** matrixarray, int** matrixspec, int* matrixnumber) {
-    srand(time(NULL));
     *matrixnumber = positiveValue("Podaj ilosæ macierzy któr¹ chcesz wype³niæ: ");
     cout << *matrixnumber;
     matrixarray = new int** [*matrixnumber];
@@ -290,6 +340,56 @@ void enterMartixNumberFromRandom(int*** matrixarray, int** matrixspec, int* matr
 }
 //----------------------KONIEC WCZYTYWANIE DANYCH JAKO WARTOSCI LOSOWE-------------------
 
+
+//----------------------MENU WYWO£YWANIA OPERACJI-------------------
+void operationMenu(int*** matrixarray, int** matrixspec, int* matrixnumber) {
+    int option = INT_MAX;
+
+/*    cout << "Dostêpne funkcje" << endl;
+    cout << "1. Dodawanie macierzy" << endl;
+    cout << "2. Mno¿enie macierzy" << endl;
+    cout << "3. Transpozycja macierzy" << endl;
+    cout << "4. Wyznacznik macierzy" << endl;
+    cout << endl;*/
+    do {
+        option = positiveValue("Dostêpne funkcje\n1. Dodawanie macierzy\n2. Mno¿enie macierzy\n3. Transpozycja macierzy\n4. Wyznacznik macierzy\nPodaj funkcje której chcesz u¿yæ: ");
+        switch (option)
+        {
+        case 1: {
+            system("CLS");
+            cout << "Dostêpne macierze: " << endl;
+            cout << *matrixnumber << endl;
+            cout << " Ilosc kolumn00:" << matrixspec[0][0] << endl;
+            cout << " Ilosc wierszy01:" << matrixspec[0][1] << endl;
+            for (int i = 1;i < *matrixnumber;i++) {
+                system("PAUSE");
+                cout << "Macierz nr: " << i <<  endl;
+                cout << " Ilosc kolumn:" << matrixspec[i][0] <<  endl;
+                cout << " Ilosc wierszy:" << matrixspec[i][1] << endl;
+            }
+            int matrix1 = positiveValueNonCLS("Podaj numer pierwszej macierzy", *matrixnumber);
+            int matrix2 = positiveValueNonCLS("Podaj numer drugiej macierzy", *matrixnumber);
+
+            break;
+        }
+        case 2: {
+            cout << "œmigo" << endl;
+            break;
+        }
+        case 3: {
+            cout << "œmigo" << endl;
+            break;
+        }
+        case 4: {
+            cout << "œmigo" << endl;
+            break;
+        }
+        default:
+                break;
+        }
+    } while (option > 4);
+}
+
 void wypiszWynik(int** matrix, int xsize, int ysize) {
     for (int i = 0;i < xsize;i++) {
         for (int j = 0;j < ysize;j++) {
@@ -299,7 +399,7 @@ void wypiszWynik(int** matrix, int xsize, int ysize) {
     }
 }
 
-int enterMartixNumber() {
+/* int enterMartixNumber() {
     cout << "Podaj iloœæ macierzy (1-4): "; //trzeba to zmieniæ na funkcje :)
     bool validation = false;
     int martixnumber = 0;
@@ -311,7 +411,7 @@ int enterMartixNumber() {
     } while (!validation);
 
 	return martixnumber;
-}
+}*/
 int startMenu() {
     string wybor;
     int option;
@@ -330,8 +430,9 @@ int startMenu() {
             if (wybor != "1" && wybor != "2" && wybor != "3"&& wybor != "Exit"&& wybor != "exit") {
                 throw 'e';
             }
-            if (wybor == "Exit" && wybor == "exit") {
-                return 0;
+            if (wybor == "Exit" || wybor == "exit") {
+                option = 0;
+                validation = true;
             }
             else
             {
@@ -349,6 +450,7 @@ int startMenu() {
 
 
 //DODAWANIE MACIERZY
+/*
 void dodawanie(int xsize1, int xsize2, int ysize1, int ysize2, int** matrix1, int** matrix2) {
     if (xsize1 != xsize2 || ysize1 != ysize2)
     {
@@ -363,7 +465,7 @@ void dodawanie(int xsize1, int xsize2, int ysize1, int ysize2, int** matrix1, in
         wypiszWynik(matrix1,xsize1,ysize1);
     }
 }
-    
+    */
     //KONIEC SEKCJI DODAWAWANIA MACIERZY
 
     //MNO¯ENIE MACIERZY
