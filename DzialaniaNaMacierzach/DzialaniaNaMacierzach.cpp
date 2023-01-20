@@ -5,14 +5,6 @@
 
 using namespace std;
 
-/*struct matrix {
-    int xsize;
-    int ysize;
-    int** matrix;
-    matrix = new int* [xsize];
-    for (int i = 0;i < xsize;i++) {
-        matrix[i] = new int[ysize];
-};*/
 int*** matrixarray;//tablica dynamiczna z macierzami
 int** matrixspec ;//tablica przechowująca dane poszczególnej macierzy
 int* matrixnumber = new int;//ilosć macierzy
@@ -22,50 +14,38 @@ int main()
     system("color f0"); //zmiana koloru konsoli :)
     setlocale(LC_CTYPE, "Polish"); //polskie znaczki 
 
-    /*
-    cout << endl << "Działania na macierzach" << endl << endl;
-    cout << "Podaj sposób wprowadzania danych: " << endl;
-    cout << "1. Dane z pliku " << endl;
-    cout << "2. Dane wprowadzone z klawiatury " << endl;
-    cout << "3. Dane pseudolosowe " << endl;
-    bool validation = false;
-    int option = 0;
-    do{
-        cin >> option;
-        if (option == 1 || option == 2 || option == 3) {
-            validation = true;
-        }
-    } while (!validation);
-    system("cls");//Czyszczenie konsoli*/
-    int option = startMenu();
-    switch (option)
+  
+        switch (startMenu())
     {
-    case 1: {
+    case 1: { //---------DANE-------Z--------PLIKU-----------
         string plik;
-        //cin >> plik;
-        //wczytajPlik(plik);
-          do {
+       wczytajPlik(plik, matrixarray, matrixspec, matrixnumber);
+          /* do {
             cout << "Podaj nazwe pliku: ";
             cin >> plik;
         }while (!walidacjaPliku(plik));
         if (walidacjaPliku(plik)) {
             wczytajPlik(plik,matrixarray,matrixspec,matrixnumber);
-        }
+        }*/
         break;
     }
-    case 2: {
+    case 2: {//---------DANE--------Z--------KLAIWATURY-----------
         int ilosc = enterMartixNumber();
 
         break;
     }
-    case 3: {
+    case 3: {//---------DANE--------PSEUDOLOSOWE------------
         int ilosc = enterMartixNumber();
         cout << "Udało się";
         break;
     }
     default:
-        break;
+        return 0;
     }
+        cout << "Podaj dalsze działanie" << endl;
+
+
+
     return 1;
 }
 

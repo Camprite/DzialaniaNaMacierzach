@@ -10,8 +10,28 @@ bool walidacjaPliku(string plik) {
     return true; // TESTOWO
 }
 void wczytajPlik(string plik,int*** matrixarray,int** matrixspec,int* matrixnumber) {
+    bool walidacja = false;
     ifstream file;
-    file.open(plik, ios::in);
+    do {
+        try {
+            cout << "Podaj nazwe pliku: ";
+            cin >> plik;
+            file.open(plik, ios::in);
+            if (file.good()) {
+                walidacja = true;
+            }
+            if (!file.good()) {
+                throw 'e';
+            }
+        }
+        catch (...) {
+            cout << "Coœ posz³o nie tak, Kliknij dowolny klawisz by spróbowaæ jeszcze raz" << endl;
+            system("PAUSE");
+        }
+    } while (!walidacja);
+
+    
+    
     file >> *matrixnumber;
     cout << *matrixnumber;
     matrixarray = new int** [*matrixnumber];
@@ -90,21 +110,37 @@ int enterMartixNumber() {
 	return martixnumber;
 }
 int startMenu() {
-    cout << endl << "Dzia³ania na macierzach" << endl << endl;
-    cout << "Podaj sposób wprowadzania danych: " << endl;
-    cout << "1. Dane z pliku " << endl;
-    cout << "2. Dane wprowadzone z klawiatury " << endl;
-    cout << "3. Dane pseudolosowe " << endl;
+    string wybor;
+    int option;
     bool validation = false;
-    int option = 0;
     do {
-        cin >> option;
-        if (option == 1 || option == 2 || option == 3) {
-            validation = true;
-        }
-    } while (!validation);
-    system("cls");//Czyszczenie konsoli
+        try {
+            system("cls");
+            cout << endl << "Dzia³ania na macierzach" << endl << endl;
+            cout << "Podaj sposób wprowadzania danych: " << endl;
+            cout << "1. Dane z pliku " << endl;
+            cout << "2. Dane wprowadzone z klawiatury " << endl;
+            cout << "3. Dane pseudolosowe " << endl;
+            cout << endl;
+            cout << "Wpisz Exit by zakoñczyæ program" << endl;
+            cin >> wybor;
+            if (wybor != "1" && wybor != "2" && wybor != "3"&& wybor != "Exit"&& wybor != "exit") {
+                throw 'e';
+            }
+            if (wybor == "Exit" && wybor == "exit") {
+                return 0;
+            }
+            else
+            {
+                option = stoi(wybor);
+                validation = true;
 
+            }
+        }
+        catch (...) {
+
+        };
+    } while (!validation);
     return option;
 }
 
