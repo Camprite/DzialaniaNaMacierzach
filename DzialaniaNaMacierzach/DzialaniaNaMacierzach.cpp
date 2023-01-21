@@ -7,12 +7,21 @@
 
 using namespace std;
 
-int*** matrixarray = new int**;//tablica dynamiczna z macierzami
-int** matrixspec = new int*;//tablica przechowująca dane poszczególnej macierzy
-int* matrixnumber=new int;//ilosć macierzy
+
 
 int main()
 {
+    int*** matrixarray = new int** [10];
+    int** matrixspec = new int* [10];
+    int* matrixnumber = new int[10];//ilosć macierzy
+    for (int i = 0;i < 10;i++) {
+        matrixarray[i] = new int* [10];
+        matrixspec[i] = new int[10];
+        for (int j = 0;j < 10;j++) {
+            matrixarray[i][j] = new int[10];
+        }
+    }
+
     srand(time(NULL));
     //system("color 0a"); // alternatywna wersja kolorków
     system("color f0"); //zmiana koloru konsoli :)
@@ -23,7 +32,6 @@ int main()
     case 1: { //---------DANE-------Z--------PLIKU-----------
         string plik;
        enterMartixNumberFromFile(plik, matrixarray, matrixspec, matrixnumber);
-       system("pause");
         break;
     }
     case 2: {//---------DANE--------Z--------KLAIWATURY-----------
@@ -36,16 +44,11 @@ int main()
         cout << "Udało się";
         break;
     }
-    case 0: {
-        return 0;
-
-    }
     default:
         return 0;
-    }
-        operationMenu(matrixarray,matrixspec,matrixnumber);
-
-        
+    } 
+        cout << "tseas" << matrixspec[0][0] << endl;
+        operationMenu(matrixarray, matrixspec, matrixnumber);
 
 
 

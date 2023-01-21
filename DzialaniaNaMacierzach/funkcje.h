@@ -12,7 +12,6 @@ void enterMartixNumberFromRandom(int***, int**, int*);
 void enterMartixNumberFromFile(string,int***,int**,int*);
 bool walidacjaPliku(string);
 
-
  
 #endif
  

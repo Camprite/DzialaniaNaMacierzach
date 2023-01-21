@@ -204,12 +204,12 @@ void enterMartixNumberFromFile(string plik, int*** matrixarray, int** matrixspec
     file >> *matrixnumber;
     cout << "Matrix number:  " << *matrixnumber << "  ";
 
-    matrixarray = new int** [*matrixnumber];
-    matrixspec = new int* [*matrixnumber];
+  //  matrixarray = new int** [*matrixnumber];
+   // matrixspec = new int* [*matrixnumber];
     // ---------------ZADEKLAROWANIE PAMIÊCI DLA SPECYFIKACJI DANEJ MACIERZY
-    for (int i = 0;i < *matrixnumber;i++) {
-        matrixspec[i] = new int[3];
-    }
+  //  for (int i = 0;i < *matrixnumber;i++) {
+ //       matrixspec[i] = new int[3];
+//}
     // ----------------WCZYTYWANIE DANYCH -----------------------
     for (int i = 0;i < *matrixnumber;i++) {
         file >> matrixspec[i][0]; //pobranie xsize
@@ -218,19 +218,15 @@ void enterMartixNumberFromFile(string plik, int*** matrixarray, int** matrixspec
         cout << "Matrixspecx: " << matrixspec[i][0] << endl;
         cout << "Matrixspecy: " << matrixspec[i][1] << endl;
         cout << "Matrixspect: " << matrixspec[i][2] << endl;
-        matrixarray[i] = new int* [matrixspec[i][1]];
+        //matrixarray[i] = new int* [matrixspec[i][1]];
         for (int j = 0;j < matrixspec[i][0];j++) {
-            matrixarray[i][j] = new int[matrixspec[i][1]]; // change 1 to 0
+         //   matrixarray[i][j] = new int[matrixspec[i][1]]; // change 1 to 0
         }
         for (int j = 0;j < matrixspec[i][0];j++) {
             for (int k = 0;k < matrixspec[i][1];k++) {// change 1 to 0
                 int value;
                 file >> value;
                 cout << value << " - ";
-                cout << endl;
-                cout << "matrixspec0: " << matrixspec[i][0] << endl;
-                cout << "matrixspec1: " << matrixspec[i][1] << endl;
-                cout << "matrixspec2: " << matrixspec[i][2] << endl;
                 matrixarray[i][j][k] = value;
             }
             cout << endl;
@@ -358,14 +354,16 @@ void operationMenu(int*** matrixarray, int** matrixspec, int* matrixnumber) {
         case 1: {
             system("CLS");
             cout << "Dostêpne macierze: " << endl;
+            cout  << endl;
             cout << *matrixnumber << endl;
-            cout << " Ilosc kolumn00:" << matrixspec[0][0] << endl;
-            cout << " Ilosc wierszy01:" << matrixspec[0][1] << endl;
-            for (int i = 1;i < *matrixnumber;i++) {
-                system("PAUSE");
+            cout << endl;
+        
+            for (int i = 0;i < *matrixnumber;i++) {
                 cout << "Macierz nr: " << i <<  endl;
-                cout << " Ilosc kolumn:" << matrixspec[i][0] <<  endl;
-                cout << " Ilosc wierszy:" << matrixspec[i][1] << endl;
+                cout << "weŸ kurwo zadzia³aj: " << matrixarray[0][2][1] << endl;
+                cout << "weŸ kurwo zadzia³aj: " << matrixarray[1][1][1] << endl;
+                cout << "weŸ kurwo zadzia³aj: " << matrixarray[2][0][1] << endl;
+
             }
             int matrix1 = positiveValueNonCLS("Podaj numer pierwszej macierzy", *matrixnumber);
             int matrix2 = positiveValueNonCLS("Podaj numer drugiej macierzy", *matrixnumber);
