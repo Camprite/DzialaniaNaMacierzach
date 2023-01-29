@@ -7,14 +7,14 @@
 using namespace std;
 int main()
 {
-	int*** matrixarray = new int** [10];
-	int** matrixspec = new int* [10];
-	int* matrixnumber = new int[10];//ilosć macierzy
-	for (int i = 0;i < 10;i++) {
-		matrixarray[i] = new int* [10];
-		matrixspec[i] = new int[10];
-		for (int j = 0;j < 10;j++) {
-			matrixarray[i][j] = new int[10];
+	int*** matrixarray = new int** [50];
+	int** matrixspec = new int* [50];
+	int* matrixnumber = new int[50];//ilosć macierzy
+	for (int i = 0;i < 50;i++) {
+		matrixarray[i] = new int* [50];
+		matrixspec[i] = new int[50];
+		for (int j = 0;j < 50;j++) {
+			matrixarray[i][j] = new int[50];
 		}
 	}
 	srand(time(NULL));
